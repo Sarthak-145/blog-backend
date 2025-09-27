@@ -8,7 +8,7 @@ export const createPost = async (req, res) => {
 
   try {
     const result = await pool.query(
-      `INSERT INTO posts (user_id, title, content) VALUES ($1, $2, $3) RETURNING*`,
+      `INSERT INTO posts (user_id, title, content) VALUES ($1, $2, $3) RETURNING *`,
       [userId, title, content]
     );
     res.status(201).json({ post: result.rows[0] });
@@ -33,5 +33,31 @@ export const getPost = async (req, res) => {
     res
       .status(500)
       .json({ success: false, msg: "can't get all the post", err: err.msg });
+  }
+};
+
+export const getPostWithId = async (req, res) => {
+  const { id } = req.params;
+  //debugging (id is still undefined)
+  console.log(id);
+  console.log(req.params);
+  console.log(req.body);
+
+  try {
+    const result = await pool.query(
+      `SELECT posts.id, posts.title, posts.content, posts.created_at, users.username
+        FROM posts
+        INNER JOIN users ON posts.user_id = users.id
+        WHERE posts.id = $1;`,
+      [id]
+    );
+    res.json({ post: result.rows[0] });
+  } catch (err) {
+    console.log(`Error message: ${err}`);
+    res.status(404).json({
+      success: false,
+      msg: "There's no post with this ID",
+      err: err.msg,
+    });
   }
 };
