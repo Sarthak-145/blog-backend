@@ -1,8 +1,9 @@
 import pool from "../db/index.js";
 
-const createPost = async (req, res) => {
+//creating new post
+export const createPost = async (req, res) => {
   const { title, content } = req.body;
-  //userId will be from login info.
+  //userId from middleware
   const userId = req.user.userId;
 
   try {
@@ -17,4 +18,20 @@ const createPost = async (req, res) => {
   }
 };
 
-export default createPost;
+//fetching all the posts
+export const getPost = async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT posts.id, posts.title, posts.content, posts.created_at, users.username
+      FROM posts 
+      INNER JOIN users ON posts.user_id = users.id 
+      ORDER BY posts.created_at DESC`
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.log(`Error fetching post, err: ${err}`);
+    res
+      .status(500)
+      .json({ success: false, msg: "can't get all the post", err: err.msg });
+  }
+};

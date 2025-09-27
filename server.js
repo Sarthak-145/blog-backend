@@ -21,9 +21,9 @@ app.use("/api/auth", authRouter);
 // });
 app.use("/api/posts", postsRouter);
 
-app.get("/ping", (req, res) => {
-  res.send("pong");
-});
+// app.get("/ping", (req, res) => {
+//   res.send("pong");
+// });
 
 app.listen(port, hostname, () => {
   console.log(`Server is listening on http://${hostname}:${port}`);
