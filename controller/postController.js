@@ -61,3 +61,42 @@ export const getPostWithId = async (req, res) => {
     });
   }
 };
+
+//updating post
+export const updatePost = async (req, res) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+  //from middleware
+  const userId = req.user.userId;
+
+  //fetch the post which is requested for update.
+  try {
+    const postUpdate = await pool.query(`SELECT * FROM posts WHERE id=$1`, [
+      id,
+    ]);
+    if (postUpdate.rowCount === 0) {
+      res.status(404).json({ success: false, msg: "page is not found" });
+    }
+    const post = postUpdate.rows[0];
+
+    //Authorization check
+    if (post.user_id !== userId) {
+      return res
+        .status(403)
+        .json({ success: false, msg: "You can't update this post" });
+    }
+
+    const result = await pool.query(
+      `UPDATE posts
+        SET title = $1, content = $2, updated_at = NOW()
+        WHERE id = $3
+        RETURNING *;`,
+      [title, content, id]
+    );
+    res.status(200).json({ post: result.rows[0] });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ success: false, msg: "Error updating post", err: err.message });
+  }
+};
