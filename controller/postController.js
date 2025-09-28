@@ -36,6 +36,7 @@ export const getPost = async (req, res) => {
   }
 };
 
+//fetcing post with ID
 export const getPostWithId = async (req, res) => {
   const { id } = req.params;
   //debugging (id is still undefined)
@@ -75,7 +76,7 @@ export const updatePost = async (req, res) => {
       id,
     ]);
     if (postUpdate.rowCount === 0) {
-      res.status(404).json({ success: false, msg: "page is not found" });
+      return res.status(404).json({ success: false, msg: "page is not found" });
     }
     const post = postUpdate.rows[0];
 
@@ -98,5 +99,44 @@ export const updatePost = async (req, res) => {
     res
       .status(500)
       .json({ success: false, msg: "Error updating post", err: err.message });
+  }
+};
+
+//deleting post
+export const deletePost = async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user.userId; //userId of logined user
+
+  try {
+    //fetch the requested post
+    const resultPost = await pool.query(`SELECT * FROM posts WHERE id=$1`, [
+      id,
+    ]);
+
+    if (resultPost.rowCount === 0) {
+      return res.status(404).json({ success: false, msg: "page is not found" });
+    }
+    //actual post from result obj
+    const post = resultPost.rows[0];
+
+    //check authorization
+    if (post.user_id !== userId) {
+      return res
+        .status(403)
+        .json({ success: false, msg: "You can't delete this post" });
+    }
+    const result = await pool.query(
+      `DELETE FROM posts WHERE id=$1 RETURNING *`,
+      [id]
+    );
+    res.status(200).json({
+      success: true,
+      msg: `post with id ${id} is deleted`,
+      post: result.rows[0],
+    });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ success: false, msg: "Error deleting post", err: err.message });
   }
 };

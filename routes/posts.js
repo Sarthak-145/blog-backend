@@ -1,5 +1,6 @@
 import {
   createPost,
+  deletePost,
   getPost,
   getPostWithId,
   updatePost,
@@ -13,4 +14,5 @@ router.post("/", authenticateToken, createPost);
 router.get("/", getPost);
 router.get("/:id", getPostWithId);
 router.put("/:id", authenticateToken, updatePost);
+router.delete("/:id", authenticateToken, deletePost);
 export default router;
