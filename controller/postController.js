@@ -27,7 +27,7 @@ export const getPost = async (req, res) => {
       INNER JOIN users ON posts.user_id = users.id 
       ORDER BY posts.created_at DESC`
     );
-    res.json(result.rows);
+    res.json({ post: result.rows });
   } catch (err) {
     console.log(`Error fetching post, err: ${err}`);
     res
