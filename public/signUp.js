@@ -19,7 +19,7 @@ async function handleSignUp(e) {
     if (!res.ok) {
       return alert("Error singing up: " + data.msg || "unkown error");
     }
-    alert("Sing Up successful, you can login now");
+    alert("Sign Up successful, you can login now");
   } catch (err) {
     console.log("Error while registering", err);
   }
