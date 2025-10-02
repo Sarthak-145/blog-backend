@@ -11,6 +11,7 @@ app.use(express.json());
 const port = process.env.PORT || 5000;
 const hostname = process.env.HOST || "127.0.0.1";
 
+app.use(express.static("public"));
 //routes
 app.use("/api/auth", authRouter);
 
