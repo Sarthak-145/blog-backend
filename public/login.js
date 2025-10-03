@@ -23,6 +23,9 @@ async function handleLogin(e) {
     localStorage.setItem("token", data.token);
     localStorage.setItem("user", JSON.stringify(data.user));
 
+    //direct to the home page
+    window.location.href = "./index.html";
+
     alert("Login successful");
   } catch (err) {
     console.log("Error while registering", err);
