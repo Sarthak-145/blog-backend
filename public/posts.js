@@ -1,3 +1,4 @@
+const token = localStorage.getItem(token);
 async function loadPost() {
   try {
     const res = await fetch("http://localhost:5000/api/posts");
@@ -22,7 +23,7 @@ async function loadPost() {
 }
 loadPost();
 //for createPost
-const form = document.getElementById("getPost");
+const form = document.getElementById("postForm");
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const title = document.getElementById("title");
@@ -33,7 +34,7 @@ form.addEventListener("submit", async (e) => {
       method: "POST",
       headers: {
         "Content-Type": "application-json",
-        Authorization: "Bearer" + localStorage.getItem(token),
+        Authorization: "Bearer" + token,
       },
       body: JSON.stringify({ title, content }),
     });
@@ -45,3 +46,15 @@ form.addEventListener("submit", async (e) => {
     console.log("Error creating post", err);
   }
 });
+
+//conditional rendering
+const authBtns = document.getElementById("authBtn");
+const logOutBtn = document.getElementById("logOutBtn");
+
+//when user has logged in
+if (token) {
+  authBtns.style.display = "none";
+} else {
+  logOutBtn.style.display = "none";
+  post.style.display = "none";
+}
