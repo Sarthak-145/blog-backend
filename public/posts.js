@@ -1,4 +1,4 @@
-const token = localStorage.getItem(token);
+const token = localStorage.getItem("token");
 async function loadPost() {
   try {
     const res = await fetch("http://localhost:5000/api/posts");
@@ -33,8 +33,8 @@ form.addEventListener("submit", async (e) => {
     const res = await fetch("http://localhost/api/posts", {
       method: "POST",
       headers: {
-        "Content-Type": "application-json",
-        Authorization: "Bearer" + token,
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
       },
       body: JSON.stringify({ title, content }),
     });
@@ -56,5 +56,4 @@ if (token) {
   authBtns.style.display = "none";
 } else {
   logOutBtn.style.display = "none";
-  post.style.display = "none";
 }
