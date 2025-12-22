@@ -11,20 +11,10 @@ app.use(express.json());
 const port = process.env.PORT || 5000;
 const hostname = process.env.HOST || "127.0.0.1";
 
-app.use(express.static("public"));
 //routes
 app.use("/api/auth", authRouter);
 
-//post routes
-// app.use("/api/posts", (req, res, next) => {
-//   console.log(req.headers);
-//   next();
-// });
 app.use("/api/posts", postsRouter);
-
-// app.get("/ping", (req, res) => {
-//   res.send("pong");
-// });
 
 app.listen(port, hostname, () => {
   console.log(`Server is listening on http://${hostname}:${port}`);
