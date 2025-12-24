@@ -1,10 +1,11 @@
-import pool from "../db/index.js";
+import pool from '../db/index.js';
 
 //creating new post
 export const createPost = async (req, res) => {
   const { title, content } = req.body;
   //userId from middleware
   const userId = req.user.userId;
+  console.log('req.user:', req.user);
 
   try {
     const result = await pool.query(
@@ -13,7 +14,7 @@ export const createPost = async (req, res) => {
     );
     res.status(201).json({ post: result.rows[0] });
   } catch (err) {
-    console.log("Error creating post: ", err);
+    console.log('Error creating post: ', err);
     res.status(500).json({ msg: `Error creating post: ${err}` });
   }
 };
@@ -76,7 +77,7 @@ export const updatePost = async (req, res) => {
       id,
     ]);
     if (postUpdate.rowCount === 0) {
-      return res.status(404).json({ success: false, msg: "page is not found" });
+      return res.status(404).json({ success: false, msg: 'page is not found' });
     }
     const post = postUpdate.rows[0];
 
@@ -98,7 +99,7 @@ export const updatePost = async (req, res) => {
   } catch (err) {
     res
       .status(500)
-      .json({ success: false, msg: "Error updating post", err: err.message });
+      .json({ success: false, msg: 'Error updating post', err: err.message });
   }
 };
 
@@ -114,7 +115,7 @@ export const deletePost = async (req, res) => {
     ]);
 
     if (resultPost.rowCount === 0) {
-      return res.status(404).json({ success: false, msg: "page is not found" });
+      return res.status(404).json({ success: false, msg: 'page is not found' });
     }
     //actual post from result obj
     const post = resultPost.rows[0];
@@ -137,6 +138,6 @@ export const deletePost = async (req, res) => {
   } catch (err) {
     res
       .status(500)
-      .json({ success: false, msg: "Error deleting post", err: err.message });
+      .json({ success: false, msg: 'Error deleting post', err: err.message });
   }
 };
