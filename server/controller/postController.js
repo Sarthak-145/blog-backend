@@ -20,15 +20,16 @@ export const createPost = async (req, res) => {
 };
 
 //fetching all the posts
-export const getPost = async (req, res) => {
+export const getPosts = async (req, res) => {
   try {
     const result = await pool.query(
-      `SELECT posts.id, posts.title, posts.content, posts.created_at, users.username
+      `SELECT posts.post_id, posts.title, posts.content, posts.created_at, users.username
       FROM posts 
-      INNER JOIN users ON posts.user_id = users.id 
+      INNER JOIN users ON posts.user_id = users.user_id 
       ORDER BY posts.created_at DESC`
     );
-    res.json({ post: result.rows });
+    res.json({ posts: result.rows });
+    console.log('result.rows: (getPosts fun)', result.rows);
   } catch (err) {
     console.log(`Error fetching post, err: ${err}`);
     res
