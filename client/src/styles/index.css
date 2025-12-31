@@ -1,1 +1,67 @@
-/* global styles */
+@import 'tailwindcss';
+
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+body {
+  background-color: var(--color-slate-900);
+}
+h1 {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+}
+
+h2 {
+  font-size: var(--text-3xl);
+  font-weight: 600;
+}
+
+h3 {
+  font-size: var(--text-2xl);
+  font-weight: 600;
+}
+
+h4 {
+  font-size: var(--text-xl);
+  font-weight: 500;
+}
+
+/* Backgrounds */
+.bg-app {
+  background-color: var(--color-slate-950);
+}
+
+.bg-surface {
+  background-color: var(--color-slate-900);
+}
+
+/* Text */
+.text-primary {
+  color: var(--color-slate-100);
+}
+
+/* Accents */
+.text-accent {
+  color: var(--color-cyan-400);
+}
+
+.bg-accent {
+  background-color: var(--color-cyan-500);
+}
+
+.text-accent-alt {
+  color: var(--color-indigo-400);
+}
+
+.bg-accent-alt {
+  background-color: var(--color-indigo-600);
+}
+
+.border-accent {
+  border-color: var(--color-cyan-500);
+}
+
+.hover-accent:hover {
+  background-color: var(--color-cyan-600);
+}

@@ -29,7 +29,6 @@ export const getPosts = async (req, res) => {
       ORDER BY posts.created_at DESC`
     );
     res.json({ posts: result.rows });
-    console.log('result.rows: (getPosts fun)', result.rows);
   } catch (err) {
     console.log(`Error fetching post, err: ${err}`);
     res
