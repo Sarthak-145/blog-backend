@@ -16,6 +16,10 @@ const Login = () => {
 
     try {
       const response = await login({ email, password });
+
+      const { token, user } = response.data;
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
     } catch (err) {
       setError(err.msg || 'Login failed');
     } finally {
@@ -61,12 +65,15 @@ const Login = () => {
             />
           </div>
 
+          {error && <p className="text-red-400 text-sm text-center">{error}</p>}
+
           <button
             type="submit"
             className="mt-4 rounded-md bg-cyan-400 text-[#020617]
                        py-2 font-medium tracking-wide
                        hover:bg-cyan-300 active:scale-[0.98]
                        transition"
+            disabled={loading}
           >
             Login
           </button>
