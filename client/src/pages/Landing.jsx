@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Home from './Home';
 export default function Landing() {
   return (
@@ -8,9 +9,12 @@ export default function Landing() {
 
           <p className="text-gray-400">Turn thoughts into something real.</p>
 
-          <button className="px-6 py-3 rounded-lg bg-white text-black font-medium hover:bg-gray-200 transition">
+          <Link
+            to="/register"
+            className="px-6 py-3 rounded-lg bg-white text-black font-medium hover:bg-gray-200 transition"
+          >
             Get started
-          </button>
+          </Link>
         </div>
       </div>
       <Home />
