@@ -1,8 +1,14 @@
 import { Navigate, Outlet, replace } from 'react-router-dom';
-import * as authServices from '../services/auth.service';
+import { useContext } from 'react';
+import AuthContext from '../contexts/AuthContext';
 
 export const PrivateLayout = () => {
-  if (!authServices.isLoggedin()) return <Navigate to={'/login'} replace />;
+  const { user, loading } = useContext(AuthContext);
+
+  if (loading) return null;
+
+  if (!user) return <Navigate to={'/login'} replace />;
+
   return (
     <>
       <Outlet />
