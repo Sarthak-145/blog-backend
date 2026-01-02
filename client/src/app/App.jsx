@@ -5,6 +5,8 @@ import PublicLayout from '../layouts/PublicLayout';
 import Landing from '../pages/Landing';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
+import { PrivateLayout } from '../layouts/PrivateLayout';
+import Home from '../pages/Home';
 
 function App() {
   return (
@@ -18,7 +20,9 @@ function App() {
         </Route>
 
         {/* with token */}
-        <Route></Route>
+        <Route element={<PrivateLayout />}>
+          <Route path="/" element={<Home />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
