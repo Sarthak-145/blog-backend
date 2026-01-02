@@ -1,26 +1,25 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import PublicLayout from '../layouts/PublicLayout';
 
 import Landing from '../pages/Landing';
-import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
-
       <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
+        {/* without token */}
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<Landing />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
 
-      <Footer />
+        {/* with token */}
+        <Route></Route>
+      </Routes>
     </BrowserRouter>
   );
 }
