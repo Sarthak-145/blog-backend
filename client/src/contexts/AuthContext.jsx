@@ -1,5 +1,3 @@
-//this will be wrapper around the whole app, every auth thing will pass through this
-
 import * as authServices from '../services/auth.service';
 import { createContext, useState, useEffect } from 'react';
 
@@ -9,33 +7,29 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (authServices.isLoggedin()) {
-      setUser({});
+    const storedUser = authServices.getUser();
+    if (authServices.isLoggedin() && user) {
+      setUser(JSON.parse(storedUser));
     }
     setLoading(false);
   }, []);
 
-  //login is broken but Login.jsx is overriding for now.
   const login = async (data) => {
     const res = await authServices.login(data);
     localStorage.setItem('token', res.data.token);
     localStorage.setItem('user', JSON.stringify(res.data.user));
-    setUser({});
+    setUser(res.data.user);
     return res;
   };
 
   const register = async (data) => {
-    const res = await authServices.register(data);
-    setUser({});
-    return res;
+    return await authServices.register(data);
   };
 
   const logout = () => {
     authServices.logout();
     setUser(null);
   };
-
-  //still register remaining but include after updating services.auth.js
 
   return (
     <AuthContext.Provider value={{ user, loading, login, register, logout }}>
