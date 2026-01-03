@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (authServices.isLoggedin()) {
-      setUser({}); //hold on, will include real data once it works.
+      setUser({});
     }
     setLoading(false);
   }, []);
@@ -18,6 +18,14 @@ export const AuthProvider = ({ children }) => {
   //login is broken but Login.jsx is overriding for now.
   const login = async (data) => {
     const res = await authServices.login(data);
+    localStorage.setItem('token', res.data.token);
+    localStorage.setItem('user', JSON.stringify(res.data.user));
+    setUser({});
+    return res;
+  };
+
+  const register = async (data) => {
+    const res = await authServices.register(data);
     setUser({});
     return res;
   };
@@ -30,7 +38,7 @@ export const AuthProvider = ({ children }) => {
   //still register remaining but include after updating services.auth.js
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );

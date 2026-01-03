@@ -1,5 +1,6 @@
-import { register } from '../services/auth.service';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [error, seterror] = useState(null);
@@ -9,6 +10,9 @@ const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  const { register } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,8 +25,8 @@ const Register = () => {
     seterror(null);
 
     try {
-      const response = await register({ email, username, password });
-      console.log('registration successful: ', response);
+      await register({ email, username, password });
+      navigate('login');
     } catch (err) {
       seterror(err.msg || 'Registration failed');
     } finally {

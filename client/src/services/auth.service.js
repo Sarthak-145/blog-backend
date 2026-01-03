@@ -17,4 +17,8 @@ const getToken = () => {
   return localStorage.getItem('token');
 };
 
-export { login, register, logout, isLoggedin, getToken };
+const getUser = () => {
+  return localStorage.getItem('user');
+};
+
+export { login, register, logout, isLoggedin, getToken, getUser };
