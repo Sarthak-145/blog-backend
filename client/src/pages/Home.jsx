@@ -6,8 +6,6 @@ function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log('useEffect fired');
-
     getPosts()
       .then((res) => {
         setPosts(res.data.posts);

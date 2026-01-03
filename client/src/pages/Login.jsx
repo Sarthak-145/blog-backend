@@ -1,25 +1,25 @@
-import { login } from '../services/auth.service';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const { login } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email, password);
 
     setLoading(true);
     setError(null);
 
     try {
-      const response = await login({ email, password });
-
-      const { token, user } = response.data;
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
+      await login({ email, password });
+      navigate('/home');
     } catch (err) {
       setError(err.msg || 'Login failed');
     } finally {

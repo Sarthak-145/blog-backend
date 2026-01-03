@@ -7,7 +7,7 @@ import Login from '../pages/Login';
 import Register from '../pages/Register';
 import { PrivateLayout } from '../layouts/PrivateLayout';
 import Home from '../pages/Home';
-import { AuthProvider } from '../../test';
+import { AuthProvider } from '../contexts/AuthContext';
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
 
           {/* with token */}
           <Route element={<PrivateLayout />}>
-            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
           </Route>
         </Routes>
       </BrowserRouter>

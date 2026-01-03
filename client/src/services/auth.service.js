@@ -6,6 +6,7 @@ const register = (data) => API.post('/auth/register', data);
 //logout, isLoggedin, getToken
 const logout = () => {
   localStorage.removeItem('token');
+  localStorage.removeItem('user');
 };
 
 const isLoggedin = () => {

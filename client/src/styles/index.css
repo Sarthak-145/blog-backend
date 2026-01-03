@@ -41,6 +41,10 @@ h4 {
   color: var(--color-slate-100);
 }
 
+.hover-text-accent:hover {
+  color: var(--color-cyan-400);
+}
+
 /* Accents */
 .text-accent {
   color: var(--color-cyan-400);
