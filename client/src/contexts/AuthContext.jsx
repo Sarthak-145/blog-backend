@@ -7,11 +7,17 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedUser = authServices.getUser();
-    if (authServices.isLoggedin() && storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-    setLoading(false);
+    const checkToken = async () => {
+      try {
+        const res = await authServices.me();
+        setUser(res.data.user);
+      } catch (err) {
+        authServices.logout();
+      } finally {
+        setLoading(false);
+      }
+    };
+    checkToken();
   }, []);
 
   const login = async (data) => {
