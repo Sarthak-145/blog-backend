@@ -59,3 +59,18 @@ export const login = async (req, res) => {
     res.status(500).json({ success: false, msg: 'Error login user' });
   }
 };
+
+export const getMe = async (req, res) => {
+  //from middleware
+  const userId = req.user.userId;
+  const result = await pool.query(
+    'SELECT user_id, username, email, created_at, updated_at FROM users WHERE user_id = $1',
+    [userId]
+  );
+
+  if (!result.rows[0]) {
+    res.status(401).json({ success: false, msg: 'User is not found' });
+  }
+
+  res.status(200).json({ succcess: true, user: result.rows[0] });
+};
