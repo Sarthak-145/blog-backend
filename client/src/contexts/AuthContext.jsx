@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const storedUser = authServices.getUser();
-    if (authServices.isLoggedin() && user) {
+    if (authServices.isLoggedin() && storedUser) {
       setUser(JSON.parse(storedUser));
     }
     setLoading(false);
