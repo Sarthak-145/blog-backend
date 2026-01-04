@@ -23,7 +23,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (data) => {
-    return await authServices.register(data);
+    const res = await authServices.register(data);
+    localStorage.setItem('token', res.data.token);
+    localStorage.setItem('user', JSON.stringify(res.data.user));
+    setUser(res.data.user);
+    return res;
   };
 
   const logout = () => {

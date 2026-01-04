@@ -26,7 +26,7 @@ const Register = () => {
 
     try {
       await register({ email, username, password });
-      navigate('login');
+      navigate('/home');
     } catch (err) {
       seterror(err.msg || 'Registration failed');
     } finally {
