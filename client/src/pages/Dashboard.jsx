@@ -1,0 +1,80 @@
+import { useEffect, useState } from 'react';
+import { getPostsMe } from '../services/posts.service';
+
+const Dashboard = () => {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    getPostsMe()
+      .then((res) => {
+        setPosts(res.data.posts || []);
+        setLoading(false);
+      })
+
+      .catch((err) => {
+        setError('Oops! error showing your posts!');
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <h3>loading your posts...</h3>;
+
+  return (
+    <div className="min-h-screen px-10 mx-20">
+      <div className="flex items-center justify-between m-6">
+        <h2 className="text-3xl font-semibold text-cyan-400">Your Dashboard</h2>
+
+        <button
+          className="rounded-md bg-cyan-400 text-[#020617]
+                 px-5 py-2 font-medium tracking-wide
+                 hover:bg-cyan-300 active:scale-[0.98]
+                 transition"
+        >
+          + New Post
+        </button>
+      </div>
+
+      {error && <p className="text-red-400 text-sm text-center">{error}</p>}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {posts.map((post) => (
+          <div
+            className="rounded-lg border border-cyan-500/20
+                 bg-slate-900 h-64 p-4
+                 flex flex-col justify-between
+                 shadow"
+            key={post.post_id}
+          >
+            <div>
+              <h4 className="text-xl font-medium text-cyan-300 mb-2">
+                {post.title}
+              </h4>
+
+              <p className="text-slate-300 leading-relaxed line-clamp-4">
+                {post.content}
+              </p>
+            </div>
+
+            <div className="flex items-center justify-between pt-4">
+              <small className="text-sm text-cyan-500">{post.created_on}</small>
+
+              <div className="flex gap-3">
+                <button className="text-sm text-cyan-300 hover:text-cyan-200 transition">
+                  Edit
+                </button>
+
+                <button className="text-sm text-red-400 hover:text-red-300 transition">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;

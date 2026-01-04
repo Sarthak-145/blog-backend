@@ -9,6 +9,7 @@ import { PrivateLayout } from '../layouts/PrivateLayout';
 import Home from '../pages/Home';
 import { AuthProvider } from '../contexts/AuthContext';
 import CreatePost from '../pages/CreatePost';
+import Dashboard from '../pages/Dashboard';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route element={<PrivateLayout />}>
             <Route path="/home" element={<Home />} />
             <Route path="/post/new" element={<CreatePost />} />
+            <Route path="/dashBoard" element={<Dashboard />} />
           </Route>
         </Routes>
       </BrowserRouter>
