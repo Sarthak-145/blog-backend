@@ -8,6 +8,7 @@ import Register from '../pages/Register';
 import { PrivateLayout } from '../layouts/PrivateLayout';
 import Home from '../pages/Home';
 import { AuthProvider } from '../contexts/AuthContext';
+import CreatePost from '../pages/CreatePost';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           {/* with token */}
           <Route element={<PrivateLayout />}>
             <Route path="/home" element={<Home />} />
+            <Route path="/post/new" element={<CreatePost />} />
           </Route>
         </Routes>
       </BrowserRouter>
